@@ -15,12 +15,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.Call
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -42,7 +48,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.androidstudio_koala_template.ui.theme.AndroidStudioKoalaTemplateTheme
-import java.nio.channels.Selector
+import androidx.compose.ui.graphics.vector.ImageVector
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,9 +62,12 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun disenoapp() {
+    var selectedIcon by remember { mutableStateOf(Icons.Default.Favorite) }
+
     Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
         Text(
             text = "Repte 01",
@@ -69,9 +78,27 @@ fun disenoapp() {
         )
 
         Spacer(modifier = Modifier.height(20.dp))
-        SelectorComponent()
-        Spacer(modifier = Modifier.height(220.dp))
+
+        SelectorComponent(onIconSelected = { icon -> selectedIcon = icon })
+
+        Spacer(modifier = Modifier.height(250.dp))
+
         minmax()
+
+        Spacer(modifier = Modifier.height(200.dp))
+
+        Box(
+            modifier = Modifier
+                .size(80.dp)
+                .wrapContentSize(Alignment.Center)
+        ) {
+            Icon(
+                imageVector = selectedIcon,
+                contentDescription = "Icono seleccionado",
+                modifier = Modifier.size(40.dp),
+                tint = Color.Black
+            )
+        }
     }
 }
 
@@ -83,25 +110,21 @@ fun minmax() {
             Spacer(modifier = Modifier.height(8.dp))
             TextField(
                 value = "",
-                onValueChange = {
-
-                },
+                onValueChange = {},
                 modifier = Modifier
                     .width(80.dp)
                     .height(46.dp)
             )
         }
 
-        Spacer(modifier = Modifier.width(16.dp)) // Ajusta el espacio entre las columnas
+        Spacer(modifier = Modifier.width(16.dp))
 
         Column(modifier = Modifier.weight(1f)) {
             Text("Max:")
             Spacer(modifier = Modifier.height(8.dp))
             TextField(
                 value = "",
-                onValueChange = {
-
-                },
+                onValueChange = {},
                 modifier = Modifier
                     .width(80.dp)
                     .height(46.dp)
@@ -109,11 +132,22 @@ fun minmax() {
         }
     }
 }
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SelectorComponent() {
+fun SelectorComponent(onIconSelected: (imageVector: ImageVector) -> Unit) {
     var expanded by remember { mutableStateOf(false) }
-    val options = listOf("Email", "Call", "Search", "Add", "Home", "Favorite", "Settings", "Person", "Share", "Camera")
+    val options = listOf(
+        Pair("Email", Icons.Default.Email),
+        Pair("Call", Icons.Default.Call),
+        Pair("Search", Icons.Default.Search),
+        Pair("Add", Icons.Default.Add),
+        Pair("Home", Icons.Default.Home),
+        Pair("Favorite", Icons.Default.Favorite),
+        Pair("Settings", Icons.Default.Settings),
+        Pair("Person", Icons.Default.Person),
+        Pair("Share", Icons.Default.Share),
+    )
 
     Box(
         modifier = Modifier.fillMaxWidth(),
@@ -140,7 +174,7 @@ fun SelectorComponent() {
                 colors = androidx.compose.material3.TextFieldDefaults.textFieldColors(
                     containerColor = Color.Blue,
                     focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent
                 )
             )
             DropdownMenu(
@@ -148,10 +182,11 @@ fun SelectorComponent() {
                 onDismissRequest = { expanded = false },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                options.forEach { option ->
+                options.forEach { (label, icon) ->
                     DropdownMenuItem(
-                        text = { Text(text = option, color = Color.White) }, // Texto blanco
+                        text = { Text(text = label, color = Color.White) },
                         onClick = {
+                            onIconSelected(icon)
                             expanded = false
                         }
                     )
