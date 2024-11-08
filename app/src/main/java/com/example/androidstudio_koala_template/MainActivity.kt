@@ -131,16 +131,16 @@ fun SelectorComponent() {
                     Icon(
                         imageVector = Icons.Default.ArrowDropDown,
                         contentDescription = null,
-                        tint = Color.White // Color azul para el icono
+                        tint = Color.White
                     )
                 },
                 readOnly = true,
                 modifier = Modifier.menuAnchor(),
-                textStyle = androidx.compose.ui.text.TextStyle(color = Color.White), // Texto blanco
+                textStyle = androidx.compose.ui.text.TextStyle(color = Color.White),
                 colors = androidx.compose.material3.TextFieldDefaults.textFieldColors(
-                    containerColor = Color.Blue,  // Fondo azul del TextField
-                    focusedIndicatorColor = Color.Transparent, // Sin indicación de enfoque
-                    unfocusedIndicatorColor = Color.Transparent // Sin indicación sin enfoque
+                    containerColor = Color.Blue,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
                 )
             )
             DropdownMenu(
