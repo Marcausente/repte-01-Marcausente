@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -68,11 +69,46 @@ fun disenoapp() {
         )
 
         Spacer(modifier = Modifier.height(20.dp))
-
         SelectorComponent()
+        Spacer(modifier = Modifier.height(220.dp))
+        minmax()
     }
 }
 
+@Composable
+fun minmax() {
+    Row(modifier = Modifier.fillMaxWidth().padding(start = 40.dp), verticalAlignment = Alignment.CenterVertically) {
+        Column(modifier = Modifier.weight(1f)) {
+            Text("Min:")
+            Spacer(modifier = Modifier.height(8.dp))
+            TextField(
+                value = "",
+                onValueChange = {
+
+                },
+                modifier = Modifier
+                    .width(80.dp)
+                    .height(46.dp)
+            )
+        }
+
+        Spacer(modifier = Modifier.width(16.dp)) // Ajusta el espacio entre las columnas
+
+        Column(modifier = Modifier.weight(1f)) {
+            Text("Max:")
+            Spacer(modifier = Modifier.height(8.dp))
+            TextField(
+                value = "",
+                onValueChange = {
+
+                },
+                modifier = Modifier
+                    .width(80.dp)
+                    .height(46.dp)
+            )
+        }
+    }
+}
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SelectorComponent() {
